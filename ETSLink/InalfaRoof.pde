@@ -3,28 +3,55 @@
 
 class InalfaRoof{ 
   
-  EngineEvent engine = new EngineEvent();
-  BlinkerEvent blinker = new BlinkerEvent();
-  WaveEvent wave = new WaveEvent();
+  boolean doorActive = false;
+  boolean twinkleActive = false;
   
-  TestEvent test = new TestEvent();
+  boolean engineOn = false;
+  
+  boolean knightRiderActive = false;
+  
+  DoorEvent doorEvent;
+  StepInEvent stepInEvent;
+  SeatBeltEvent seatBeltLeftEvent;
+  SeatBeltEvent seatBeltRightEvent;
+  EngineEvent engineEvent;
+  KnightRiderEvent knightRiderEvent;
   
   color ambientColour;
   
   public InalfaRoof ( color ambientColour ) {
     this.ambientColour = ambientColour;
-    wave.currentColour = ambientColour;
+    
+    stepInEvent = new StepInEvent(color(255));
+    doorEvent = new DoorEvent(color(255, 255, 255));
+    seatBeltLeftEvent = new SeatBeltEvent(color(255), false);
+    seatBeltRightEvent = new SeatBeltEvent(color(255), true);
+    
+    engineEvent = new EngineEvent();
+    
+    knightRiderEvent = new KnightRiderEvent();
   }
   
-  void Tick(){
+  public void Tick(){
+    /*
     engine.Handle();
     
     if(engine.carStarted){
       wave.Handle();
       blinker.Handle();
     }
+    */
     
-    test.Handle();
+    stepInEvent.Tick();
+    
+    doorEvent.Tick();
+    
+    seatBeltLeftEvent.Tick();
+    seatBeltRightEvent.Tick();
+    
+    engineEvent.Tick();
+    
+    knightRiderEvent.Tick();
   }
   
 }

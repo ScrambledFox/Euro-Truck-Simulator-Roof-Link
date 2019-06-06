@@ -7,7 +7,7 @@ class BlinkerEvent{
   int maxBlinkerProgress = 30;
   
   public void Handle(){
-    if(carData.blinkerLeftActive || carData.blinkerRightActive) blinkerProgress++;
+    //if(carData.blinkerLeftActive || carData.blinkerRightActive) blinkerProgress++;
     if(blinkerProgress > maxBlinkerProgress) blinkerProgress = -maxBlinkerProgress;
     
     this.Draw();
@@ -25,12 +25,14 @@ class BlinkerEvent{
     float size = blinkerProgress / (float)maxBlinkerProgress;
     
     if(blinkerProgress > 0){
+      /*
       if(carData.blinkerLeftActive) {
         rect(0, 0, 10, size * height);
       }
       if(carData.blinkerRightActive) {
         rect(10, 0, 10, size * height);
       }
+      */
     }
     
     popStyle();

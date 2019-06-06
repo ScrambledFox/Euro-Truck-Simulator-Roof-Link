@@ -3,12 +3,12 @@
 
 import spout.*;
 
-SetupEvent setup = new SetupEvent();
+//SetupEvent setup = new SetupEvent();
 InalfaRoof inalfaRoof;
 
-CarData carData;
+//CarData carData;
 
-DataExporter dataExporter = new DataExporter();
+//DataExporter dataExporter = new DataExporter();
 Spout spout;
 
 // 0: id setup, 1: user colour setup R, 2: user colour setup G, 3: user colour setup B, 4: select color index A, 5: select color index B, 6: Wait for start, 7: Start ?????????
@@ -22,7 +22,7 @@ void setup(){
   background(0);
   
   inalfaRoof = new InalfaRoof(color(255, 255, 255));
-  carData = new CarData("http://192.168.0.22:25555/api/ets2/telemetry");
+  //carData = new CarData("http://192.168.0.22:25555/api/ets2/telemetry");
   
   //spout = new Spout(this);
   //spout.createSender("ETSLink");
@@ -48,6 +48,7 @@ void draw(){
   }
   */
   
+  /*
   if( programState >= 0 ) {
     setup.HandleTestStart();
     
@@ -58,6 +59,9 @@ void draw(){
   if(programState >= 1){
     if(!inalfaRoof.test.started) inalfaRoof.test.Start();
   }
+  */
+  
+  inalfaRoof.Tick();
   
   //spout.sendTexture();
   
@@ -65,45 +69,28 @@ void draw(){
 
   // Only call via threads.. LoadJSON takes a long time!
 void UpdateLiveData(){
-  carData.Tick();
+  //carData.Tick();
 }
 
 void keyPressed(){
-  if(key == CODED){
-    if(keyCode == UP){
-      if(programState == 0) setup.participantId++;
-      if(programState == 1) setup.ambientR++;
-      if(programState == 2) setup.ambientG++;
-      if(programState == 3) setup.ambientB++;
-      if(programState == 4) setup.testColour1Index++;
-      if(programState == 5) setup.testColour2Index++;
-    }
-    if(keyCode == DOWN){
-      if(programState == 0) setup.participantId--;
-      if(programState == 1) setup.ambientR--;
-      if(programState == 2) setup.ambientG--;
-      if(programState == 3) setup.ambientB--;
-      if(programState == 4) setup.testColour1Index--;
-      if(programState == 5) setup.testColour2Index--;
-    }
-    if(keyCode == LEFT){
-      if(programState == 1) setup.ambientR -= 25;
-      if(programState == 2) setup.ambientG -= 25;
-      if(programState == 3) setup.ambientB -= 25;
-    }
-    if(keyCode == RIGHT){
-      if(programState == 1) setup.ambientR += 25;
-      if(programState == 2) setup.ambientG += 25;
-      if(programState == 3) setup.ambientB += 25;
-    }
-    if(keyCode == ALT){
-      if(programState == 1) setup.ambientR = setup.ambientR < 128 ? 255 : 0;
-      if(programState == 2) setup.ambientG = setup.ambientG < 128 ? 255 : 0;
-      if(programState == 3) setup.ambientB = setup.ambientB < 128 ? 255 : 0;
-    }
+  if(key == 'd'){
+    inalfaRoof.doorActive = !inalfaRoof.doorActive;
   }
-  if(key == ENTER){
-    setup.Next();
+  if(key == 't'){
+    inalfaRoof.twinkleActive = !inalfaRoof.twinkleActive;
+  }
+  if(key == 'n'){
+    inalfaRoof.seatBeltLeftEvent.doSeatBelt();
+  }
+  if(key == 'm'){
+    inalfaRoof.seatBeltRightEvent.doSeatBelt();
+  }
+  if(key == 'e'){
+    inalfaRoof.engineOn = !inalfaRoof.engineOn; 
+  }
+  if(key == 'k'){
+    inalfaRoof.knightRiderActive = !inalfaRoof.knightRiderActive;
+    inalfaRoof.knightRiderEvent.y = 0;
   }
 
 }

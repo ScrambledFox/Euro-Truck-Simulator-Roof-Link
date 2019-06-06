@@ -144,9 +144,10 @@ class SetupEvent extends Event {
       SetTestData();
     }
     
-    DrawTestStart();
+    //DrawTestStart();
   }
   
+  /*
   private void DrawTestStart () {
     pushMatrix();
     pushStyle();
@@ -176,6 +177,7 @@ class SetupEvent extends Event {
     popStyle();
     popMatrix();
   }
+  */
   
   public String GetTimeInMinutes (long frames) {
     int seconds = (int)(frames/60);
@@ -191,7 +193,7 @@ class SetupEvent extends Event {
   public void SetTestData(){
     inalfaRoof.ambientColour = color(ambientR, ambientG, ambientB);
     
-    dataExporter.ExportData();
+    //dataExporter.ExportData();
     testDataSent = true;
   }
   
