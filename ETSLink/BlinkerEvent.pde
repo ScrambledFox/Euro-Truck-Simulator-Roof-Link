@@ -4,11 +4,33 @@
 class BlinkerEvent{
   
   int blinkerProgress = -30;
-  int maxBlinkerProgress = 30;
+  int blinkSpeed = 30;
   
-  public void Handle(){
-    //if(carData.blinkerLeftActive || carData.blinkerRightActive) blinkerProgress++;
-    if(blinkerProgress > maxBlinkerProgress) blinkerProgress = -maxBlinkerProgress;
+  boolean side;
+  boolean active;
+  
+  public BlinkerEvent( boolean side ){
+    this.side = side;
+  }
+  
+  public void Activate(){
+    active = true;
+  }
+  
+  public void Deactivate(){
+    active = false;
+  }
+  
+  public void SetState(boolean state){
+    active = state;
+  }
+  
+  public void Tick(boolean state){
+    SetState(state);
+    
+    if(active)                         blinkerProgress++;
+    else                               blinkerProgress = -blinkSpeed;
+    if(blinkerProgress > blinkSpeed)   blinkerProgress = -blinkSpeed;
     
     this.Draw();
   }
@@ -22,17 +44,11 @@ class BlinkerEvent{
     
     translate(0, 0, 10);
     
-    float size = blinkerProgress / (float)maxBlinkerProgress;
+    float size = blinkerProgress / (float)blinkSpeed;
     
     if(blinkerProgress > 0){
-      /*
-      if(carData.blinkerLeftActive) {
-        rect(0, 0, 10, size * height);
-      }
-      if(carData.blinkerRightActive) {
-        rect(10, 0, 10, size * height);
-      }
-      */
+      if(!side) rect(0, height, inalfaRoof.effectWidth, -size * height);
+      else     rect(inalfaRoof.effectWidth, height, inalfaRoof.effectWidth, -size * height);
     }
     
     popStyle();

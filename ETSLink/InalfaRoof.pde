@@ -3,55 +3,51 @@
 
 class InalfaRoof{ 
   
-  boolean doorActive = false;
-  boolean twinkleActive = false;
-  
-  boolean engineOn = false;
-  
-  boolean knightRiderActive = false;
-  
+  int effectWidth = 20;
+
   DoorEvent doorEvent;
-  StepInEvent stepInEvent;
-  SeatBeltEvent seatBeltLeftEvent;
-  SeatBeltEvent seatBeltRightEvent;
   EngineEvent engineEvent;
   KnightRiderEvent knightRiderEvent;
   
+  BlinkerEvent blinkerLeft;
+  BlinkerEvent blinkerRight;
+  
+  BrakeEvent brakeEvent;
+
   color ambientColour;
   
   public InalfaRoof ( color ambientColour ) {
     this.ambientColour = ambientColour;
-    
-    stepInEvent = new StepInEvent(color(255));
-    doorEvent = new DoorEvent(color(255, 255, 255));
-    seatBeltLeftEvent = new SeatBeltEvent(color(255), false);
-    seatBeltRightEvent = new SeatBeltEvent(color(255), true);
-    
+
+    doorEvent = new DoorEvent(ambientColour);
     engineEvent = new EngineEvent();
     
     knightRiderEvent = new KnightRiderEvent();
+    
+    blinkerLeft = new BlinkerEvent(false);
+    blinkerRight = new BlinkerEvent(true);
+    
+    brakeEvent = new BrakeEvent();
   }
   
   public void Tick(){
-    /*
-    engine.Handle();
     
-    if(engine.carStarted){
-      wave.Handle();
-      blinker.Handle();
-    }
-    */
-    
-    stepInEvent.Tick();
-    
-    doorEvent.Tick();
-    
-    seatBeltLeftEvent.Tick();
-    seatBeltRightEvent.Tick();
-    
+    // Other Systems // Also event systems
     engineEvent.Tick();
     
-    knightRiderEvent.Tick();
+    knightRiderEvent.Tick(carData.knightRider);
+    
+    doorEvent.Tick(carData.doorOpen);
+    
+    blinkerLeft.Tick(carData.blinkerLeftActive);
+    blinkerRight.Tick(carData.blinkerRightActive);
+    
+    brakeEvent.Tick(carData.userBrake > 0.1);
+    
+    // Systems to handle on when engine is on..
+    if(engineEvent.carStarted){
+      
+    }
   }
   
 }

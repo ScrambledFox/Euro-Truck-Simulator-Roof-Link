@@ -12,18 +12,26 @@ class CarData extends Data {
   boolean blinkerLeftActive;
   boolean blinkerRightActive;
   
+  boolean blinkerLeftOn;
+  boolean blinkerRightOn;
+  
   boolean lightsDashboardOn;
   
   float userSteer;
+  float userBrake;
   
   int speedLimit;
+  
+  boolean doorOpen;
+  boolean knightRider;
   
   public CarData ( String url ) {
     this.url = url;
   }
   
   public void Tick ( ) {
-      /*UpdateRawData();
+    /*
+      UpdateRawData();
       JSONObject truckData = rawData.getJSONObject("truck");
       JSONObject navigationData = rawData.getJSONObject("navigation");
       
@@ -39,17 +47,15 @@ class CarData extends Data {
       blinkerRightOn = truckData.getBoolean("blinkerRightOn");
       
       userSteer = truckData.getFloat("userSteer");
+      userBrake = truckData.getFloat("userBrake");
       
       speedLimit = navigationData.getInt("speedLimit");
       */
       
       engineOn = true;
-      speed = 50;
-      speedLimit = 20;
-      rpm = 2500;
-      maxRpm = 2500;
       
-      blinkerLeftActive = true;
+      maxRpm = 2500;
+      rpm = 1000;
       
   }
   
